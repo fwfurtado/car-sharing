@@ -1,0 +1,45 @@
+server:
+  port: 9999
+
+
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          lower-case-service-id: true
+      routes:
+        - id: authorizations
+          url: forward:/oauth/token
+          predicates:
+            - Path=/oauth/token
+
+  boot:
+    admin:
+      client:
+        url: http://localhost:7000
+  application:
+    name: api-gateway
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    git:
+      mode: full
+
+info:
+  app:
+    name: \${spring.application.name}
+    version: ${version}
+
+
+eureka:
+  client:
+    register-with-eureka: false

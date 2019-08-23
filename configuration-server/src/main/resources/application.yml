@@ -1,0 +1,38 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: configuration-server
+  cloud:
+    config:
+      server:
+#        native:
+#          search-locations: classpath:/configuration-files
+        git:
+          uri: https://github.com/fwfurtado/config-files
+          username:
+          password:
+  #  profiles:
+#    active: native
+  boot:
+    admin:
+      client:
+        url: http://localhost:7000
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    git:
+      mode: full
+
+info:
+  app:
+    name: \${spring.application.name}
+    version: ${version}

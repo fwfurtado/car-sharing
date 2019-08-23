@@ -1,0 +1,10 @@
+server:
+  port: 7000
+
+spring:
+  application:
+    name: admin-server
+
+eureka:
+  client:
+    register-with-eureka: false

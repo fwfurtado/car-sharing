@@ -1,0 +1,32 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: service-discovery
+  boot:
+    admin:
+      client:
+        url: http://localhost:7000
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    git:
+      mode: full
+
+info:
+  app:
+    name: \${spring.application.name}
+    version: ${version}
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false

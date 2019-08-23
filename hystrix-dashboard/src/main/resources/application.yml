@@ -1,0 +1,32 @@
+server:
+  port: 8089
+
+
+spring:
+  application:
+    name: hystrix-dashboard
+
+  boot:
+    admin:
+      client:
+        url: http://localhost:7000
+  kafka:
+    bootstrap-servers: localhost:9092
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    git:
+      mode: full
+
+info:
+  app:
+    name: \${spring.application.name}
+    version: ${version}
+

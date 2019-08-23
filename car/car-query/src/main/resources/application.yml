@@ -1,0 +1,65 @@
+server:
+  port: 8011
+
+
+spring:
+  application:
+    name: car-query
+  datasource:
+    url: jdbc:mysql://localhost:3306/cars_query?createDatabaseIfNotExist=true
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  boot:
+    admin:
+      client:
+        url: http://localhost:7000
+  kafka:
+    bootstrap-servers: localhost:9092
+  cloud:
+    stream:
+      bindings:
+        input:
+          group: car-query
+          content-type: application/json
+          destination: cars
+  sleuth:
+    sampler:
+      probability: 1.0
+    messaging:
+      kafka:
+        enabled: true
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    git:
+      mode: full
+
+info:
+  app:
+    name: \${spring.application.name}
+    version: ${version}
+#eureka:
+#  client:
+#    enabled: false
+
+---
+spring:
+  profiles: test
+  datasource:
+    url: jdbc:mysql://localhost:3306/cars_query_test?createDatabaseIfNotExist=true
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  boot:
+    admin:
+      client:
+        enabled: false

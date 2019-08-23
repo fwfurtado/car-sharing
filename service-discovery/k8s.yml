@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-discovery-deployment
+spec:
+  selector:
+    app: multistage-spring
+  ports:
+  - protocol: TCP   
+    port: 8080 
+    targetPort: 8761
+  type: LoadBalancer      
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-discovery-deployment
+  labels:
+    app: sd-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sd
+  template:
+    metadata:
+      name: service-discovery-pod
+      labels:
+        app: sd    
+    spec:
+      containers:
+      - name: service-discovery
+        image: llsilvas/service-discovery
+        ports:
+        - containerPort: 8761
+            

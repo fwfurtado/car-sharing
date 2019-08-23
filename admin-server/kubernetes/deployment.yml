@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-server-deployment
+spec:
+  selector:
+    matchLabels:
+      app: admin-server-app
+  replicas: 1
+  template:
+    metadata:
+      name: admin-server    
+      labels:
+        app: admin-server-app
+        appType: internal
+    spec:
+      containers:
+      - name: admin-server
+        image: car-sharing/admin-server
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 7000

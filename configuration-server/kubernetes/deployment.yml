@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: configuration-server
+spec:
+  selector:
+    matchLabels:
+      app: configuration-server
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: configuration-server
+        appType: internal
+    spec:
+      containers:
+        - name: configuration-server
+          image: car-sharing/configuration-server
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8888          

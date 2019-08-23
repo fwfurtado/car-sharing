@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: authorization-server
+  datasource:
+    url: jdbc:mysql://localhost/authorization?createDatabaseIfNotExist=true
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+security:
+  oauth2:
+    client:
+#      client-id: f091599a-e25c-4740-98d1-851bd4bc8a57
+      client-id: client
+      client-secret: "{bcrypt}$2a$10$WOy7g2J6rEqeXcFp0dbP5eWd4jYa8C2kkWA6B.dPRvlo1KFHINZwG"
+#      client-secret: 123456
+      access-token-validity-seconds: 3600 # 1 Hour
+      refresh-token-validity-seconds: 2592000 # 30 Days
+      authorized-grant-types: password, refresh_token
+      scope: write,read

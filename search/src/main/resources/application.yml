@@ -1,0 +1,57 @@
+server:
+  port: 8020
+
+car-sharing:
+  max-distance: 10.0
+
+spring:
+  application:
+    name: search
+  data:
+    mongodb:
+      database: search
+      host: localhost
+#  boot:
+#    admin:
+#      client:
+#        enabled: false
+  kafka:
+    bootstrap-servers: localhost:9092
+  cloud:
+    stream:
+      bindings:
+        cars:
+          group: search
+          content-type: application/json
+          destination: cars
+  sleuth:
+    sampler:
+      probability: 1.0
+    messaging:
+      kafka:
+        enabled: true
+
+#eureka:
+#  client:
+#    enabled: false
+
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    git:
+      mode: full
+
+info:
+  app:
+    name: \${spring.application.name}
+    version: ${version}
+
+
+

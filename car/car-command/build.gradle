@@ -1,0 +1,36 @@
+apply plugin: 'spring-cloud-contract'
+apply plugin: 'maven-publish'
+
+contracts {
+
+    packageWithBaseClasses = 'me.fwfurtado.contracts.base'
+
+    baseClassMappings {
+        baseClassMapping('.*car-query-consumer.*', 'me.fwfurtado.cars.command.contracts.base.registration.RegistrationBase')
+        baseClassMapping('.*search-consumer.*', 'me.fwfurtado.cars.command.contracts.base.registration.RegistrationBase')
+    }
+
+}
+
+publishStubsToScm {
+    customize {
+        contractDependency {
+            stringNotation = "${project.group}:${project.name}:${project.version}"
+        }
+
+        contractsMode = "REMOTE"
+
+        contractRepository {
+            repositoryUrl = "git://git@github.com:fwfurtado/car-sharing-contracts.git"
+        }
+    }
+}
+
+publish.dependsOn('publishStubsToScm')
+publishToMavenLocal.dependsOn("publishStubsToScm")
+
+dependencies {
+    testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
+    testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner'
+}
+

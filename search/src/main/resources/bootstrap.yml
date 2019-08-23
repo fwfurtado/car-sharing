@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    config:
+      enabled: false
+---
+spring:
+  profiles: prod
+  cloud:
+    config:
+      enabled: true

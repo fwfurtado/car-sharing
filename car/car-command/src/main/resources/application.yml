@@ -1,0 +1,84 @@
+server:
+  port: 8010
+
+car-sharing:
+  services:
+    user: user
+
+spring:
+  application:
+    name: car-command
+  datasource:
+    url: jdbc:mysql://localhost:3306/cars_command?createDatabaseIfNotExist=true
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  boot:
+    admin:
+      client:
+        url: http://localhost:7000
+  kafka:
+    bootstrap-servers: localhost:9092
+  cloud:
+    stream:
+      bindings:
+        cars:
+          group: car-command
+          content-type: application/json
+          destination: cars
+  sleuth:
+    sampler:
+      probability: 1.0
+    messaging:
+      kafka:
+        enabled: true
+
+
+
+#eureka:
+#  client:
+#    enabled: false
+
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    git:
+      mode: full
+
+info:
+  app:
+    name: \${spring.application.name}
+    version: ${version}
+
+feign:
+  hystrix:
+    enabled: true
+
+security:
+  oauth2:
+    client:
+      client-id: client
+      client-secret: "123456"
+    resource:
+      token-info-uri: http://localhost:8080/oauth/check_token
+---
+spring:
+  profiles: test
+  datasource:
+    url: jdbc:mysql://localhost:3306/cars_command_test?createDatabaseIfNotExist=true
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  boot:
+    admin:
+      client:
+        enabled: false
